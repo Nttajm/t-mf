@@ -15,15 +15,14 @@ import ChatRoom from './App';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAWDN0LUrAEsqT6gqjPwhORcp924ZDngFE",
-  authDomain: "chat-3-7942e.firebaseapp.com",
-  projectId: "chat-3-7942e",
-  storageBucket: "chat-3-7942e.appspot.com",
-  messagingSenderId: "589178656779",
-  appId: "1:589178656779:web:5bf03576d4fe60e9354f0e",
-  measurementId: "G-146SHE01R7"
+    apiKey: "AIzaSyAWDN0LUrAEsqT6gqjPwhORcp924ZDngFE",
+    authDomain: "chat-3-7942e.firebaseapp.com",
+    projectId: "chat-3-7942e",
+    storageBucket: "chat-3-7942e.appspot.com",
+    messagingSenderId: "589178656779",
+    appId: "1:589178656779:web:5bf03576d4fe60e9354f0e",
+    measurementId: "G-146SHE01R7"
 };
-
 // Initialize Firebase services
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -41,7 +40,12 @@ function ProfileForm() {
       e.preventDefault();
       
       const { uid } = auth.currentUser;
-  
+
+    if (!uid) {
+        console.error("User is not authenticated");
+        return; // You can return or handle the error as needed
+    }
+    
       // Save user profile in Firestore
       await setDoc(doc(firestore, 'users', uid), {
         firstName,
